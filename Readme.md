@@ -20,7 +20,7 @@ $ make build-client
 $ make run-client
 ```
 
-## Results
+## Results Bash
 
 With two local containers on a fast NVMe drive.
 
@@ -46,4 +46,14 @@ CHUNK_COUNT=5
 real    0m0.183s
 user    0m0.040s
 sys     0m0.142s
+```
+
+## Results Rust
+
+CHUNK_COUNT=5
+
+```
+real    0m0.293s
+user    0m0.064s
+sys     0m0.171s
 ```

@@ -10,6 +10,7 @@ WORKDIR /home/main
 
 USER main
 
+COPY fs-rebuild fs-rebuild
 COPY rebuild.sh rebuild.sh
 COPY entrypoint.sh entrypoint.sh
 
