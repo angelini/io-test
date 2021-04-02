@@ -27,15 +27,10 @@ split_input() {
     log "split input directory ${INPUT_DIR} into ${CHUNK_COUNT} chunks"
 
     local directories="$(du -h -d 1 "${INPUT_DIR}" | sort -h -r | awk '{ print $2 }' | tail -n +2)"
-    local chunk_idx=1
 
     for dir in ${directories}; do
-        cp -r "${dir}" "${OUTPUT_DIR}/${chunk_idx}/"
-        ((chunk_idx=chunk_idx+1))
-
-        if [[ "${chunk_idx}" > "${CHUNK_COUNT}" ]]; then
-            chunk_idx=1
-        fi
+        local smallest_dir=$(du -h -d 1 "${OUTPUT_DIR}" | sort -h | head -n 1 | awk '{ print $2 }')
+        cp -r "${dir}" "${smallest_dir}/"
     done
 }
 
