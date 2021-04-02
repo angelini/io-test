@@ -1,0 +1,25 @@
+FROM fedora:33
+
+RUN dnf install -y --nodocs findutils procps which time nginx zstd \
+    && dnf clean all
+
+VOLUME /mnt/data
+
+RUN groupadd --system --gid 2001 main \
+    && useradd --no-log-init --system --create-home --gid main --uid 1001 main
+
+RUN chown -R main:main /var/log/nginx \
+    && chown -R main:main /var/lib/nginx
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+WORKDIR /home/main
+
+USER main
+
+RUN mkdir -p "${HOME}/logs"
+
+COPY split.sh split.sh
+COPY entrypoint.sh entrypoint.sh
+
+ENTRYPOINT ./entrypoint.sh
