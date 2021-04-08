@@ -3,8 +3,10 @@ FROM fedora:33
 RUN dnf install -y --nodocs findutils procps which time curl zstd \
     && dnf clean all
 
-RUN groupadd --system --gid 2001 main \
-    && useradd --no-log-init --system --create-home --gid main --uid 1001 main
+VOLUME /mnt/data
+
+RUN groupadd --system --gid 1000 main \
+    && useradd --no-log-init --system --create-home --gid main --uid 1000 main
 
 WORKDIR /home/main
 

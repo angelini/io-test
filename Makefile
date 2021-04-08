@@ -25,4 +25,5 @@ run-server:
 run-client:
 	docker run --name "$(PROJECT)-client" \
 		--rm --net host \
+		--volume "./example:/mnt/data:z" \
 		-it "localhost/$(PROJECT):client"

@@ -1,5 +1,6 @@
 client/fs-rebuild
 node_modules/
+example/
 output/
 fs-rebuild/Cargo.lock
 fs-rebuild/target/

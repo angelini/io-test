@@ -3,9 +3,9 @@
 set -euo pipefail
 
 readonly SERVER="localhost:8080"
-readonly OUTPUT_DIR="${HOME}/output"
+readonly OUTPUT_DIR="/mnt/data"
 
-readonly CHUNK_COUNT=5
+readonly CHUNK_COUNT=4
 
 log() {
     echo "$(date +"%H:%M:%S") - $(printf '%s' "$@")" 1>&2

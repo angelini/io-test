@@ -6,7 +6,7 @@ set -euo pipefail
 readonly INPUT_DIR="/mnt/data"
 readonly OUTPUT_DIR="${HOME}/output"
 
-readonly CHUNK_COUNT=5
+readonly CHUNK_COUNT=4
 
 log() {
     echo "$(date +"%H:%M:%S") - $(printf '%s' "$@")" 1>&2
@@ -26,11 +26,17 @@ reset_output_dir() {
 split_input() {
     log "split input directory ${INPUT_DIR} into ${CHUNK_COUNT} chunks"
 
-    local directories="$(du -h -d 1 "${INPUT_DIR}" | sort -h -r | awk '{ print $2 }' | tail -n +2)"
+    local files="$(find "${INPUT_DIR}" -type f -exec du -a {} + | sort -r | awk '{ print $2 }' | tail -n +2)"
 
-    for dir in ${directories}; do
-        local smallest_dir=$(du -h -d 1 "${OUTPUT_DIR}" | sort -h | head -n 1 | awk '{ print $2 }')
-        cp -r "${dir}" "${smallest_dir}/"
+    for file in ${files}; do
+        local smallest_dir="$(du -d 1 "${OUTPUT_DIR}" | sort -n | head -n 1 | awk '{ print $2 }')"
+
+        local relative_file="${file#$INPUT_DIR}"
+        local base="$(basename "${file}")"
+        local parent_dir="${smallest_dir}${relative_file%$base}"
+
+        mkdir -p "${parent_dir}"
+        cp -r "${file}" "${parent_dir}/"
     done
 }
 

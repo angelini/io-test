@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly OUTPUT_DIR="${HOME}/output"
+readonly OUTPUT_DIR="/mnt/data"
 
 log() {
     echo "$(date +"%H:%M:%S") - $(printf '%s' "$@")" 1>&2

@@ -10,7 +10,7 @@ use thiserror::Error;
 use zstd::stream::read::Decoder;
 
 const SERVER: &str = "http://127.0.0.1:8080/";
-const CHUNK_COUNT: usize = 5;
+const CHUNK_COUNT: usize = 4;
 
 #[derive(Error, Debug)]
 pub enum RebuildError {
@@ -40,7 +40,7 @@ fn fetch_chunk(output: PathBuf, idx: usize) -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    let output = Path::new("./output");
+    let output = Path::new("/mnt/data");
     let mut threads = vec![];
 
     for idx in 1..(CHUNK_COUNT + 1) {
