@@ -24,8 +24,8 @@ main() {
     mkdir -p "${OUTPUT_DIR}"
 
     for _ in $(seq 5); do
-        run_shell
         run_rust
+        run_shell
     done
 }
 

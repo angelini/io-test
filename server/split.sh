@@ -6,7 +6,7 @@ set -euo pipefail
 readonly INPUT_DIR="/mnt/data"
 readonly OUTPUT_DIR="${HOME}/output"
 
-readonly CHUNK_COUNT=4
+readonly CHUNK_COUNT=8
 
 log() {
     echo "$(date +"%H:%M:%S") - $(printf '%s' "$@")" 1>&2

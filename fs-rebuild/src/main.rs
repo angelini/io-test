@@ -9,8 +9,8 @@ use tar::Archive;
 use thiserror::Error;
 use zstd::stream::read::Decoder;
 
-const SERVER: &str = "http://127.0.0.1:8080/";
-const CHUNK_COUNT: usize = 4;
+const SERVER: &str = "http://io-test-server:8080/";
+const CHUNK_COUNT: usize = 8;
 
 #[derive(Error, Debug)]
 pub enum RebuildError {
@@ -19,10 +19,10 @@ pub enum RebuildError {
 }
 
 fn fetch_chunk(output: PathBuf, idx: usize) -> Result<()> {
-    let t0 = Instant::now();
+    let _t0 = Instant::now();
 
     let resp = reqwest::blocking::get(&format!("{}/{}.tar.zst", SERVER, idx))?;
-    let t1 = Instant::now();
+    let _t1 = Instant::now();
 
     let bytes = resp.bytes()?;
     let decoder = Decoder::new(bytes.reader())?;
@@ -32,8 +32,8 @@ fn fetch_chunk(output: PathBuf, idx: usize) -> Result<()> {
     archive.unpack(output)?;
     let t3 = Instant::now();
 
-    println!("t1({}): {:?}", idx, t1 - t0);
-    println!("t2({}): {:?}", idx, t2 - t1);
+    // println!("t1({}): {:?}", idx, t1 - t0);
+    // println!("t2({}): {:?}", idx, t2 - t1);
     println!("t3({}): {:?}", idx, t3 - t2);
 
     Ok(())

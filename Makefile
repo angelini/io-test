@@ -11,19 +11,39 @@ build-rust:
 	cp fs-rebuild/target/release/fs-rebuild client/fs-rebuild
 
 build-server: install-npm-packages
-	docker build -f server/Containerfile -t "$(PROJECT):server" --net host
+	sudo podman build -f server/Containerfile -t "$(PROJECT):server" --net host
+
+build-server-docker: install-npm-packages
+	sudo docker build -t "$(PROJECT):server" -f ./server/Containerfile ./server
 
 build-client: build-rust
-	docker build -f client/Containerfile -t "$(PROJECT):client" --net host
+	sudo podman build -f client/Containerfile -t "$(PROJECT):client" --net host
+
+build-client-docker: build-rust
+	sudo docker build -t "$(PROJECT):client" -f ./client/Containerfile ./client
 
 run-server:
-	docker run --name "$(PROJECT)-server" \
+	sudo podman run --name "$(PROJECT)-server" \
 		--rm --net host \
 		--volume "./node_modules:/mnt/data:z" \
 		-it "localhost/$(PROJECT):server"
 
+run-server-docker:
+	sudo docker run --name "$(PROJECT)-server" \
+		--rm \
+		--volume "$(shell pwd)/node_modules:/mnt/data" \
+		-it "$(PROJECT):server"
+
 run-client:
-	docker run --name "$(PROJECT)-client" \
+	sudo podman run --name "$(PROJECT)-client" \
 		--rm --net host \
 		--volume "./example:/mnt/data:z" \
 		-it "localhost/$(PROJECT):client"
+
+run-client-docker:
+	sudo docker run --name "$(PROJECT)-client" \
+		--runtime runsc \
+		--link "$(PROJECT)-server:$(PROJECT)-server" \
+		--rm \
+		--volume "$(shell pwd)/example:/mnt/data" \
+		-it "$(PROJECT):client"
