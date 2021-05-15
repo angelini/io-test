@@ -1,19 +1,20 @@
 FROM fedora:33
 
-RUN dnf install -y --nodocs findutils procps which time curl zstd \
+RUN dnf install -y --nodocs findutils procps net-tools which time curl zstd \
     && dnf clean all
 
-VOLUME /mnt/data
+# VOLUME /mnt/data
 
 RUN groupadd --system --gid 1000 main \
     && useradd --no-log-init --system --create-home --gid main --uid 1000 main
 
 WORKDIR /home/main
 
-USER main
+# USER main
 
 COPY fs-rebuild fs-rebuild
 COPY rebuild.sh rebuild.sh
 COPY entrypoint.sh entrypoint.sh
 
-ENTRYPOINT ./entrypoint.sh
+# ENTRYPOINT ./entrypoint.sh
+ENTRYPOINT bash

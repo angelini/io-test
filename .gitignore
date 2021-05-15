@@ -4,4 +4,9 @@ example/
 output/
 fs-rebuild/Cargo.lock
 fs-rebuild/target/
+pg-files/Cargo.lock
+pg-files/target/
+pg-files/input
 package-lock.json
+client.tar
+server.tar

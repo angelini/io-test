@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  volumes:
+  - name: modules-volume
+    persistentVolumeClaim:
+      claimName: modules-claim
+  containers:
+  - name: server
+    image: localhost/io-test:server
+    ports:
+      - name: nginx
+        containerPort: 8080
+        protocol: TCP
+    command: ["./entrypoint.sh"]
+    volumeMounts:
+    - name: modules-volume
+      mountPath: /mnt/data

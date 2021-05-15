@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+spec:
+  runtimeClassName: kata
+  volumes:
+  - name: output-volume
+    emptyDir: {}
+  containers:
+  - name: client
+    image: localhost/io-test:client
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    volumeMounts:
+    - name: output-volume
+      mountPath: /mnt/data

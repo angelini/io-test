@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-readonly SERVER="io-test-server:8080"
-readonly OUTPUT_DIR="/mnt/data"
+readonly SERVER="http://${SERVER_SERVICE_HOST}:${SERVER_SERVICE_PORT}"
+readonly OUTPUT_DIR="/mnt/data/foo"
 
 readonly CHUNK_COUNT=8
 
