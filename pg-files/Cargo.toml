@@ -1,0 +1,14 @@
+[package]
+name = "pg-files"
+version = "0.1.0"
+authors = ["Alex Angelini <alex.louis.angelini@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0"
+clap = "2.33.3"
+postgres = { version = "0.19.1", features = ["with-uuid-0_8"] }
+rayon = "1.5.0"
+sha2 = "0.9.4"
+uuid = "0.8.2"
+walkdir = "2.3.2"
